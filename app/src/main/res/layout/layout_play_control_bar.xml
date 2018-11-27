@@ -51,9 +51,9 @@
 
     <ImageView
         android:id="@+id/image_shuffle"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:src="@drawable/ic_suffle_option"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:src="@drawable/ic_shuffle"
         app:layout_constraintBottom_toBottomOf="@id/view_control_bar"
         app:layout_constraintLeft_toLeftOf="@id/view_control_bar"
         app:layout_constraintRight_toLeftOf="@id/image_previous"
@@ -63,8 +63,9 @@
     <ImageView
         android:id="@+id/image_previous"
         android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:src="@drawable/ic_back"
+        android:scaleType="fitXY"
+        android:layout_height="@dimen/dp_20"
+        android:src="@drawable/ic_left_arrow"
         app:layout_constraintBottom_toBottomOf="@id/image_shuffle"
         app:layout_constraintLeft_toRightOf="@id/image_shuffle"
         app:layout_constraintRight_toLeftOf="@id/image_play"
@@ -74,7 +75,7 @@
         android:id="@+id/image_play"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
-        android:src="@drawable/ic_play_button"
+        android:src="@drawable/ic_pause"
         app:layout_constraintBottom_toBottomOf="@id/image_previous"
         app:layout_constraintLeft_toRightOf="@id/image_previous"
         app:layout_constraintRight_toLeftOf="@id/image_next"
@@ -94,9 +95,10 @@
 
     <ImageView
         android:id="@+id/image_next"
+        android:layout_height="@dimen/dp_20"
         android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:src="@drawable/ic_next"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_fast_forward"
         app:layout_constraintBottom_toBottomOf="@id/image_play"
         app:layout_constraintLeft_toRightOf="@id/image_play"
         app:layout_constraintRight_toLeftOf="@id/image_loop"
@@ -104,8 +106,8 @@
 
     <ImageView
         android:id="@+id/image_loop"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:src="@drawable/loop"
         app:layout_constraintBottom_toBottomOf="@id/image_next"
         app:layout_constraintLeft_toRightOf="@id/image_next"

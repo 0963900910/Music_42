@@ -2,6 +2,7 @@ package com.framgia.quangtran.music_42.data.source.remote;
 
 import com.framgia.quangtran.music_42.data.model.Track;
 import com.framgia.quangtran.music_42.data.source.TrackDataSource;
+import com.framgia.quangtran.music_42.util.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ public class LoadTrackAsyncTask extends BaseLoadTracksAsyncTask<Track> {
                 Track track = new Track();
                 track.setId(id);
                 track.setTitle(tittle);
+                track.setStreamUrl(StringUtil.initStreamApi(id));
                 track.setArtWorkUrl(artwork);
                 track.setUserName(fullname);
                 tracks.add(track);

@@ -3,7 +3,8 @@
     <color name="color_primary">#008577</color>
     <color name="color_primary_dark">#00574B</color>
     <color name="color_accent">#D81B60</color>
-    <color name="color_transparent">#33060606</color>
+    <color name="color_transparent">#CC060606</color>
     <color name="color_background">#d2cfcf</color>
     <color name="color_blue_gray">#b0bec5</color>
+    <color name="color_white">#FFF</color>
 </resources>

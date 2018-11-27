@@ -28,4 +28,6 @@
     <dimen name="sp_10">10sp</dimen>
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_25">25sp</dimen>
+    <dimen name="dp_260">260dp</dimen>
 </resources>

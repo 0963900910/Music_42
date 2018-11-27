@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.framgia.quangtran.music_42.R;
 import com.framgia.quangtran.music_42.data.model.Genre;
+import com.framgia.quangtran.music_42.data.model.Track;
 
 import java.util.List;
 

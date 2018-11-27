@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +85,7 @@ public class StorageActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClickPlayMusic(List<Track> tracks) {
-        startActivity(PlayActivity.getPlayIntent(this, (ArrayList<Track>) tracks));
+    public void onClickPlayMusic(List<Track> tracks, int i) {
+        startActivity(PlayActivity.getPlayIntent(this, (ArrayList<Track>) tracks,i));
     }
 }

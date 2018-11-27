@@ -23,10 +23,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     private static final int TAB_PERSONAL = 1;
     private static final int TAB_SETTING = 2;
     public Bundle mBundle;
+    private TodayAdapter.ClickTrack mContext;
 
-    public ViewPagerAdapter(FragmentManager fm, Bundle bundle) {
+    public ViewPagerAdapter(FragmentManager fm, Bundle bundle, TodayAdapter.ClickTrack clickTrack) {
         super(fm);
         mBundle = bundle;
+        mContext = clickTrack;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case TAB_HOME:
                 if (mBundle != null) {
                     ArrayList<Track> tracks = mBundle.getParcelableArrayList(BUNDLE_TRACKS);
-                    return HomeFragment.newInstance(tracks);
+                    return HomeFragment.newInstance(tracks, mContext);
                 }
             case TAB_PERSONAL:
                 return PersonalFragment.newInstance();

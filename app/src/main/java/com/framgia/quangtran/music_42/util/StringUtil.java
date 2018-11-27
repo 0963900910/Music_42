@@ -34,4 +34,11 @@ public class StringUtil {
                 PARAMETER_LIMIT, String.valueOf(limit),
                 PARAMETER_OFFSET, String.valueOf(offset));
     }
+
+    public static String initStreamApi(long trackId) {
+        return StringUtil.append(BASE_URL_TRACK, SPLASH,
+                String.valueOf(trackId), SPLASH,
+                NAME_STREAM, QUESTION_MARK,
+                CLIENT_ID, BuildConfig.API_KEY);
+    }
 }

@@ -1,5 +1,6 @@
 package com.framgia.quangtran.music_42.ui.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,13 +25,17 @@ import com.framgia.quangtran.music_42.ui.home.adapters.TodayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements GenresAdapter.GenreClickListener, HomeContract.View {
+public class HomeFragment extends Fragment
+        implements GenresAdapter.GenreClickListener, HomeContract.View {
     private static final String ARGUMENT_TRACKS = "ARGUMENT_TRACKS";
     private List<Track> mTracks;
     private HomeContract.Presenter mHomePresenter;
     private View mView;
+    private static TodayAdapter.ClickTrack sClickTrack;
 
-    public static HomeFragment newInstance(ArrayList<Track> tracks) {
+    public static HomeFragment newInstance(ArrayList<Track> tracks,
+                                           TodayAdapter.ClickTrack clickTrack) {
+        sClickTrack = clickTrack;
         HomeFragment homeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(ARGUMENT_TRACKS, tracks);
@@ -60,7 +65,7 @@ public class HomeFragment extends Fragment implements GenresAdapter.GenreClickLi
     private void initRecyclerToday(List<Track> tracks) {
         RecyclerView mRecyclerToday = mView.findViewById(R.id.recycler_recent);
         mRecyclerToday.setLayoutManager(new DisableScrollLinearLayout(getContext()));
-        TodayAdapter todayAdapter = new TodayAdapter(tracks);
+        TodayAdapter todayAdapter = new TodayAdapter(tracks,sClickTrack);
         mRecyclerToday.setAdapter(todayAdapter);
     }
 

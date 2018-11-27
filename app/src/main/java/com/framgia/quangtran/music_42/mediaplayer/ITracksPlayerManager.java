@@ -1,15 +1,15 @@
 package com.framgia.quangtran.music_42.mediaplayer;
 
 import android.support.annotation.IntDef;
+import android.widget.TextView;
 
 import com.framgia.quangtran.music_42.data.model.Track;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
 import java.util.List;
 
-public interface MediaPlayerInterface {
+public interface ITracksPlayerManager {
 
     void initMediaPlayer();
 
@@ -31,7 +31,7 @@ public interface MediaPlayerInterface {
 
     void seekTo(int msec);
 
-    int getStatus();
+    int getState();
 
     int getDuration();
 
@@ -43,10 +43,12 @@ public interface MediaPlayerInterface {
 
     void setTracks(List<Track> tracks);
 
+    void setTrackInfo(TextView title, TextView artist);
+
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({StatusPlayerType.IDLE, StatusPlayerType.PREPARING, StatusPlayerType.PLAYING,
-            StatusPlayerType.PAUSE, StatusPlayerType.STOP, StatusPlayerType.RELEASE})
-    @interface StatusPlayerType {
+    @IntDef({MediaPayerStates.IDLE, MediaPayerStates.PREPARING, MediaPayerStates.PLAYING,
+            MediaPayerStates.PAUSE, MediaPayerStates.STOP, MediaPayerStates.RELEASE})
+    @interface MediaPayerStates {
         int IDLE = 0;
         int PREPARING = 1;
         int PLAYING = 2;

@@ -15,18 +15,19 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.framgia.quangtran.music_42.R;
+import com.framgia.quangtran.music_42.data.model.Track;
+import com.framgia.quangtran.music_42.mediaplayer.ITracksPlayerManager;
 import com.framgia.quangtran.music_42.service.MyService;
 import com.framgia.quangtran.music_42.service.ServiceManager;
-import com.framgia.quangtran.music_42.data.model.Track;
-import com.framgia.quangtran.music_42.ui.home.HomeActivity;
 import com.framgia.quangtran.music_42.util.UtilTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayActivity extends AppCompatActivity implements View.OnClickListener,
-        SeekBar.OnSeekBarChangeListener{
+        SeekBar.OnSeekBarChangeListener {
     private static final String BUNDLE_TRACKS = "com.framgia.quangtran.music_42.ui.genre.BUNDLE_TRACKS";
+    private static final String EXTRA_POSITION = "com.framgia.quangtran.music_42.ui.genre.EXTRA_POSITION";
     private static final int PROGRESS_START = 0;
     private static final int PROGRESS_MAX = 100;
     private static final int DELAY_TIME = 1000;
@@ -38,6 +39,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBar mSeekBar;
     private TextView mCurrentTime;
     private TextView mTotalTime;
+    private TextView mTextTitle;
+    private TextView mTextArtist;
     private MyService mService;
     private UtilTime mUtilTime;
     private android.os.Handler mHandler = new android.os.Handler();
@@ -50,9 +53,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         initUI();
     }
 
-    public static Intent getPlayIntent(Context context, ArrayList<Track> tracks) {
+    public static Intent getPlayIntent(Context context, ArrayList<Track> tracks, int i) {
         Intent intent = new Intent(context, PlayActivity.class);
         intent.putParcelableArrayListExtra(BUNDLE_TRACKS, tracks);
+        intent.putExtra(EXTRA_POSITION, i);
         return intent;
     }
 
@@ -62,6 +66,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         mImagePlay = findViewById(R.id.image_play);
         mImageNext = findViewById(R.id.image_next);
         mImageLoop = findViewById(R.id.image_loop);
+        mTextTitle = findViewById(R.id.text_title);
+        mTextArtist = findViewById(R.id.text_artist);
         mSeekBar = findViewById(R.id.seek_bar_track);
         mSeekBar.setProgress(PROGRESS_START);
         mSeekBar.setMax(PROGRESS_MAX);
@@ -106,7 +112,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         List<Track> tracks = getIntent().getParcelableArrayListExtra(BUNDLE_TRACKS);
         if (tracks != null) {
             mService.setTracks(tracks);
+            mService.play(getIntent().getIntExtra(EXTRA_POSITION, 0));
             mService.start();
+            mService.setTrackInfo(mTextTitle, mTextArtist);
             mHandler.postDelayed(mUpdateTimes, DELAY_TIME);
         }
     }
@@ -123,11 +131,27 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.image_shuffle:
+            case R.id.image_previous:
+                mService.previous();
+                mImagePlay.setImageResource(R.drawable.ic_pause);
+                mService.setTrackInfo(mTextTitle, mTextArtist);
+                break;
+            case R.id.image_play:
+                changePlayPauseState();
+                break;
+            case R.id.image_next:
+                mService.next();
+                mService.setTrackInfo(mTextTitle, mTextArtist);
+                mImagePlay.setImageResource(R.drawable.ic_pause);
+                break;
+            case R.id.image_loop:
+        }
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
     }
 
     @Override
@@ -144,6 +168,16 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             int current = UtilTime.progressToTimer(progress, totalDuration);
             mService.seekTo(current);
             mHandler.postDelayed(mUpdateTimes, DELAY_TIME);
+        }
+    }
+
+    public void changePlayPauseState() {
+        if (mService.getState() == ITracksPlayerManager.MediaPayerStates.PAUSE) {
+            mService.start();
+            mImagePlay.setImageResource(R.drawable.ic_pause);
+        } else {
+            mService.pause();
+            mImagePlay.setImageResource(R.drawable.ic_play_button);
         }
     }
 

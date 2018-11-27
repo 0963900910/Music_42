@@ -31,12 +31,12 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
         }
         View contactView = mInflater.inflate(R.layout.item_recycler_music_personal, viewGroup,
                 false);
-        return new StorageAdapter.ViewHolder(contactView,mTracks, mListener);
+        return new StorageAdapter.ViewHolder(contactView, mTracks, mListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull StorageAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.bindData(mTracks.get(i));
+        viewHolder.bindData(mTracks.get(i), i);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
         private StorageClickListener mListener;
         private List<Track> mTracks;
 
-        public ViewHolder(@NonNull View itemView,List<Track> tracks, StorageClickListener storageClickListener) {
+        public ViewHolder(@NonNull View itemView, List<Track> tracks, StorageClickListener storageClickListener) {
             super(itemView);
             mListener = storageClickListener;
             mViewTrack = itemView.findViewById(R.id.view_track);
@@ -67,18 +67,22 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
             mTracks = tracks;
         }
 
-        public void bindData(Track track) {
-            if (track != null) {
-                mTextTrackName.setText(track.getTitle());
-                mTextSingerName.setText(track.getUserName());
-            }
+        public void bindData(final Track track, final int i) {
+            mViewTrack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onClickPlayMusic(mTracks, i);
+                }
+            });
+            mTextTrackName.setText(track.getTitle());
+            mTextSingerName.setText(track.getUserName());
         }
+
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.view_track:
-                    mListener.onClickPlayMusic(mTracks);
                     break;
                 default:
                     break;
@@ -88,6 +92,6 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
     }
 
     public interface StorageClickListener {
-        void onClickPlayMusic(List<Track> tracks);
+        void onClickPlayMusic(List<Track> tracks, int i);
     }
 }

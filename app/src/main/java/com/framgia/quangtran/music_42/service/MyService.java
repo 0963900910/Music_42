@@ -6,16 +6,16 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.framgia.quangtran.music_42.data.model.Track;
-import com.framgia.quangtran.music_42.mediaplayer.MediaPlayerManager;
+import com.framgia.quangtran.music_42.mediaplayer.TracksPlayerManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyService extends Service implements ServiceInterface {
     private final IBinder mIBinder = new LocalBinder();
-    private MediaPlayerManager mMediaPlayerManager;
+    private TracksPlayerManager mMediaPlayerManager;
 
     @Nullable
     @Override
@@ -23,10 +23,16 @@ public class MyService extends Service implements ServiceInterface {
         return mIBinder;
     }
 
+    public class TrackBinder extends Binder {
+        public MyService getService() {
+            return MyService.this;
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        mMediaPlayerManager = MediaPlayerManager.getInstance(this);
+        mMediaPlayerManager = TracksPlayerManager.getInstance(this);
         mMediaPlayerManager.initMediaPlayer();
     }
 
@@ -37,18 +43,12 @@ public class MyService extends Service implements ServiceInterface {
 
     @Override
     public void start() {
-        play(mMediaPlayerManager.getTrackCurrentPosition());
         mMediaPlayerManager.start();
     }
 
     @Override
-    public void preparing() {
-
-    }
-
-    @Override
     public void pause() {
-
+        mMediaPlayerManager.pause();
     }
 
     @Override
@@ -77,8 +77,18 @@ public class MyService extends Service implements ServiceInterface {
     }
 
     @Override
+    public int getState() {
+        return mMediaPlayerManager.getState();
+    }
+
+    @Override
     public void setTracks(List<Track> tracks) {
-        mMediaPlayerManager.setTracks((ArrayList<Track>) tracks);
+        mMediaPlayerManager.setTracks(tracks);
+    }
+
+    @Override
+    public void setTrackInfo(TextView title, TextView artist) {
+        mMediaPlayerManager.setTrackInfo(title, artist);
     }
 
     public class LocalBinder extends Binder {

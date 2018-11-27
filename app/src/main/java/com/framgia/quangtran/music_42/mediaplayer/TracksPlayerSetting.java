@@ -5,7 +5,7 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class MediaPlayerSetting {
+public class TracksPlayerSetting {
 
     protected int mLoopType;
     protected int mShuffleType;
