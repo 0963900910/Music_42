@@ -65,6 +65,7 @@ public class TrackStorageAsyncTask extends AsyncTask<Void, Void, List<Track>> {
                 track.setTitle(title);
                 track.setUserName(artist);
                 track.setDownLoadUrl(path);
+                track.setStreamUrl(path);
                 track.setArtWorkUrl(getAlbumArt(albumId));
                 track.setOffline(true);
                 tracks.add(track);

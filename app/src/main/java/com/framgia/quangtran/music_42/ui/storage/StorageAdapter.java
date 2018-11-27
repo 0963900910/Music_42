@@ -31,7 +31,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
         }
         View contactView = mInflater.inflate(R.layout.item_recycler_music_personal, viewGroup,
                 false);
-        return new StorageAdapter.ViewHolder(contactView, mListener);
+        return new StorageAdapter.ViewHolder(contactView,mTracks, mListener);
     }
 
     @Override
@@ -51,8 +51,9 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
         private ImageView mImageFavorite;
         private ImageView mImageDelete;
         private StorageClickListener mListener;
+        private List<Track> mTracks;
 
-        public ViewHolder(@NonNull View itemView, StorageClickListener storageClickListener) {
+        public ViewHolder(@NonNull View itemView,List<Track> tracks, StorageClickListener storageClickListener) {
             super(itemView);
             mListener = storageClickListener;
             mViewTrack = itemView.findViewById(R.id.view_track);
@@ -63,6 +64,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
             mImageFavorite.setOnClickListener(this);
             mImageDelete.setOnClickListener(this);
             mViewTrack.setOnClickListener(this);
+            mTracks = tracks;
         }
 
         public void bindData(Track track) {
@@ -76,15 +78,16 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.view_track:
-                    mListener.onClickTrack();
+                    mListener.onClickPlayMusic(mTracks);
                     break;
                 default:
                     break;
             }
         }
+
     }
 
     public interface StorageClickListener {
-        void onClickTrack();
+        void onClickPlayMusic(List<Track> tracks);
     }
 }
